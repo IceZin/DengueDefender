@@ -5,12 +5,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import monitor.denguedefender.utils.SceneManager;
 
 
 /**
  * JavaFX App
  */
 public class App extends Application {
+    SceneManager sceneManager = new SceneManager();
 
     @Override
     public void start(Stage stage) {
@@ -19,6 +21,7 @@ public class App extends Application {
 
         var label = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
         var scene = new Scene(new StackPane(label), 640, 480);
+        
         stage.setScene(scene);
         stage.show();
     }
