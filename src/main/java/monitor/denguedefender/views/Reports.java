@@ -8,6 +8,9 @@ package monitor.denguedefender.views;
  *
  * @author victo
  */
-public class Reports {
-    
+public class Reports extends View {
+    @Override
+    public void build() {
+        
+    }
 }

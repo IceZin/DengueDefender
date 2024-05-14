@@ -8,6 +8,6 @@ package monitor.denguedefender.views;
  *
  * @author victo
  */
-public class EventsCalendar {
+public class EventsCalendar extends View {
     
 }

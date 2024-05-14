@@ -8,6 +8,6 @@ package monitor.denguedefender.views;
  *
  * @author victo
  */
-public class Home {
+public class Home extends View {
     
 }
