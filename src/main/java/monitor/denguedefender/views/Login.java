@@ -81,7 +81,7 @@ public class Login extends View {
         loginPane.getChildren().addAll(
             loginBox, t1, t2, cpfInput, cpfInfo, continueBtn, visitorAcessBtn
         );
-        aa
+        
         this.canvas.getChildren().addAll(infoPane, loginPane);
     }
     
