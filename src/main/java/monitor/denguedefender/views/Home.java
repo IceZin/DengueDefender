@@ -4,6 +4,14 @@
  */
 package monitor.denguedefender.views;
 
+import components.Menu;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import monitor.denguedefender.utils.SceneManager;
 import monitor.denguedefender.utils.SessionManager;
 
@@ -17,4 +25,11 @@ public class Home extends View {
         super(sceneManager, sessionManager);
     }
     
+    @Override
+    public void build() {
+        Menu menu = new Menu();
+        
+        this.canvas.getStylesheets().add("styles.css");
+        this.canvas.getChildren().addAll(menu);
+    }
 }

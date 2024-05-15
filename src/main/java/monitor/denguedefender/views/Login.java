@@ -32,56 +32,58 @@ public class Login extends View {
         infoPane.setPrefSize(500, 550);
         infoPane.relocate(25, 25);
         
-        Rectangle infoBackground = new Rectangle(500, 550, Color.WHITE);
+        Rectangle infoBackground = new Rectangle(450, 550, Color.WHITE);
         infoBackground.setArcHeight(10.0d);
         infoBackground.setArcWidth(10.0d);
-        infoBackground.setEffect(new DropShadow(10, Color.BLACK));
+        infoBackground.setEffect(new DropShadow(10, Color.GRAY));
         
         infoPane.getChildren().addAll(infoBackground);
         
         Pane loginPane = new Pane();
-        loginPane.setPrefSize(350, 550);
-        loginPane.relocate(550, 25);
+        loginPane.setPrefSize(400, 550);
+        loginPane.relocate(500, 25);
         
-        Rectangle loginBox = new Rectangle(350, 550, Color.WHITE);
+        Rectangle loginBox = new Rectangle(400, 550, Color.WHITE);
         loginBox.setArcHeight(10.0d);
         loginBox.setArcWidth(10.0d);
-        loginBox.setEffect(new DropShadow(10, Color.BLACK));
+        loginBox.setEffect(new DropShadow(10, Color.GRAY));
         
         Text t1 = new Text(25, 40, "Insira seus dados para iniciar a sessão:");
-        t1.setFont(Font.font("Open Sans", FontWeight.BOLD, 16));
+        t1.getStyleClass().add("bold-poppins");
         
         Text t2 = new Text(25, 70, "CPF");
-        t2.setFont(Font.font("Open Sans", FontWeight.NORMAL, 16));
+        t2.setStyle("-fx-font-size: 14px");
         
         TextField cpfInput = new TextField();
-        cpfInput.setPrefSize(300, 40);
+        cpfInput.setPrefSize(350, 40);
         cpfInput.relocate(25, 80);
         cpfInput.setStyle("-fx-border-radius: 5;");
-        cpfInput.setFont(Font.font("Open Sans", FontWeight.NORMAL, 16));
         cpfInput.setPromptText("Insira seu CPF");
         
         Text cpfInfo = new Text(25, 130, "Insira seu CPF para se cadastrar ou acessar nosso sistema");
-        cpfInfo.setFont(Font.font("Open Sans", FontWeight.NORMAL, 11));
+        cpfInfo.setStyle("-fx-font-size: 10px;");
         
         Button continueBtn = new Button("Continuar");
-        continueBtn.setPrefSize(300, 40);
+        continueBtn.setPrefSize(350, 40);
         continueBtn.relocate(25, 150);
-        continueBtn.setStyle("-fx-border-radius: 5; -fx-background-color: #1351B4; -fx-text-fill: white;");
-        continueBtn.setFont(Font.font("Open Sans", FontWeight.BOLD, 16));
+        continueBtn.setStyle(
+            "-fx-border-radius: 5; -fx-background-color: #1351B4; -fx-font-size: 14px; -fx-font-weight: 700; -fx-text-fill: white; -fx-cursor: hand;"
+        );
         continueBtn.setOnAction(e -> this.handleContinue(e, cpfInput));
         
         Button visitorAcessBtn = new Button("Acessar como Visitante");
-        visitorAcessBtn.setPrefSize(300, 40);
+        visitorAcessBtn.setPrefSize(350, 40);
         visitorAcessBtn.relocate(25, 200);
-        visitorAcessBtn.setStyle("-fx-border-radius: 5; -fx-background-color: #53AF32; -fx-text-fill: white;");
-        visitorAcessBtn.setFont(Font.font("Open Sans", FontWeight.BOLD, 16));
+        visitorAcessBtn.setStyle(
+            "-fx-border-radius: 5; -fx-background-color: #53AF32; -fx-font-size: 14px; -fx-font-weight: 700; -fx-text-fill: white; -fx-cursor: hand;"
+        );
         visitorAcessBtn.setOnAction(e -> this.handleVisitorAccess(e));
         
         loginPane.getChildren().addAll(
             loginBox, t1, t2, cpfInput, cpfInfo, continueBtn, visitorAcessBtn
         );
         
+        this.canvas.getStylesheets().add("styles.css");
         this.canvas.getChildren().addAll(infoPane, loginPane);
     }
     
