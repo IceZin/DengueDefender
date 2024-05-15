@@ -4,11 +4,19 @@
  */
 package monitor.denguedefender.views;
 
+import monitor.denguedefender.utils.SceneManager;
+import monitor.denguedefender.utils.SessionManager;
+
 /**
  *
  * @author victo
  */
 public class Reports extends View {
+
+    public Reports(SceneManager sceneManager, SessionManager sessionManager) {
+        super(sceneManager, sessionManager);
+    }
+    
     @Override
     public void build() {
         

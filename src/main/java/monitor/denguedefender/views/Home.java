@@ -4,10 +4,17 @@
  */
 package monitor.denguedefender.views;
 
+import monitor.denguedefender.utils.SceneManager;
+import monitor.denguedefender.utils.SessionManager;
+
 /**
  *
  * @author victo
  */
 public class Home extends View {
+    
+    public Home(SceneManager sceneManager, SessionManager sessionManager) {
+        super(sceneManager, sessionManager);
+    }
     
 }

@@ -9,5 +9,12 @@ package monitor.denguedefender.models;
  * @author victo
  */
 public class User {
+    private String username;
+    private String password;
+    private String role;
+    private String region;
     
+    private void load() {
+        
+    }
 }

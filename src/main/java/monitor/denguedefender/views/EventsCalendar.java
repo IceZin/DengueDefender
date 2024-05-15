@@ -4,10 +4,17 @@
  */
 package monitor.denguedefender.views;
 
+import monitor.denguedefender.utils.SceneManager;
+import monitor.denguedefender.utils.SessionManager;
+
 /**
  *
  * @author victo
  */
 public class EventsCalendar extends View {
+    
+    public EventsCalendar(SceneManager sceneManager, SessionManager sessionManager) {
+        super(sceneManager, sessionManager);
+    }
     
 }

@@ -1,4 +1,4 @@
-module com.mycompany.denguedefender {
+module monitor.denguedefender {
     requires javafx.controls;
     requires javafx.base;
     requires javafx.graphics;
