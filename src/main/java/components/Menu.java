@@ -4,20 +4,18 @@
  */
 package components;
 
-import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import monitor.denguedefender.utils.SceneManager;
 
 /**
  *
  * @author victo
  */
 public class Menu extends Pane {
-    public Menu() {
+    public Menu(SceneManager sceneManager) {
         super();
         
         this.setPrefSize(100, 550);
@@ -28,34 +26,14 @@ public class Menu extends Pane {
         background.setArcWidth(20.0d);
         background.setEffect(new DropShadow(10, Color.GRAY));
         
-        Image map = new Image("map.png");
-        ImageView mapIcon = new ImageView(map);
+        MenuButton mapView = new MenuButton("Mapa de incidencias", "map.png", 15, 15);
+        MenuButton calendarView = new MenuButton("Calendário de eventos", "calendar.png", 15, 100);
+        MenuButton reportsView = new MenuButton("Alertas", "report.png", 15, 185);
         
-        mapIcon.setFitHeight(35);
-        mapIcon.setFitWidth(35);
+        mapView.setOnAction(e -> sceneManager.show("map"));
+        calendarView.setOnAction(e -> sceneManager.show("calendar"));
+        reportsView.setOnAction(e -> sceneManager.show("reports"));
         
-        Button mapView = new Button();
-        mapView.setPrefSize(70, 70);
-        mapView.relocate(15, 15);
-        mapView.setGraphic(mapIcon);
-        mapView.setStyle(
-            "-fx-background-radius: 10; -fx-background-color: #1351B4; -fx-cursor: hand;"
-        );
-        
-        Image calendar = new Image("calendar.png");
-        ImageView calendarIcon = new ImageView(calendar);
-        
-        calendarIcon.setFitHeight(35);
-        calendarIcon.setFitWidth(35);
-        
-        Button calendarView = new Button();
-        calendarView.setPrefSize(70, 70);
-        calendarView.relocate(15, 100);
-        calendarView.setGraphic(calendarIcon);
-        calendarView.setStyle(
-            "-fx-background-radius: 10; -fx-background-color: #1351B4; -fx-cursor: hand;"
-        );
-        
-        this.getChildren().addAll(background, mapView, calendarView);
+        this.getChildren().addAll(background, mapView, calendarView, reportsView);
     }
 }

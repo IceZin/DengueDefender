@@ -12,9 +12,9 @@ import monitor.denguedefender.utils.SessionManager;
  *
  * @author victo
  */
-public class Reports extends View {
+public class Map extends View {
 
-    public Reports(SceneManager sceneManager, SessionManager sessionManager) {
+    public Map(SceneManager sceneManager, SessionManager sessionManager) {
         super(sceneManager, sessionManager);
     }
     

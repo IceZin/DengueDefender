@@ -27,7 +27,7 @@ public class Home extends View {
     
     @Override
     public void build() {
-        Menu menu = new Menu();
+        Menu menu = new Menu(sceneManager);
         
         this.canvas.getStylesheets().add("styles.css");
         this.canvas.getChildren().addAll(menu);

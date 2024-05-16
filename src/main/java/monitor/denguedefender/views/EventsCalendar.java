@@ -4,6 +4,7 @@
  */
 package monitor.denguedefender.views;
 
+import components.Menu;
 import monitor.denguedefender.utils.SceneManager;
 import monitor.denguedefender.utils.SessionManager;
 
@@ -17,4 +18,11 @@ public class EventsCalendar extends View {
         super(sceneManager, sessionManager);
     }
     
+    @Override
+    public void build() {
+        Menu menu = new Menu(sceneManager);
+        
+        this.canvas.getStylesheets().add("styles.css");
+        this.canvas.getChildren().addAll(menu);
+    }
 }
