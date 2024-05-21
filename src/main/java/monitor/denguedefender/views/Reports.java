@@ -9,7 +9,6 @@ import components.Menu;
 import components.MenuButton;
 import components.ReportItem;
 import components.Table;
-import events.FieldUpdateEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,7 +20,7 @@ import monitor.denguedefender.utils.SessionManager;
  * @author victo
  */
 public class Reports extends View {
-    private int selectedCity = 0;
+    private final int selectedCity = 0;
     private Table table;
 
     public Reports(SceneManager sceneManager, SessionManager sessionManager) {
