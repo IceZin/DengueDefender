@@ -1,10 +1,12 @@
 package monitor.denguedefender;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import monitor.denguedefender.utils.PostgresConnector;
 import monitor.denguedefender.utils.SceneManager;
 import monitor.denguedefender.utils.SessionManager;
 import monitor.denguedefender.views.EventsCalendar;
@@ -23,13 +25,15 @@ public class App extends Application {
     SessionManager sessionManager = new SessionManager();
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws Exception {
+        PostgresConnector.postgres.connect();
+        
         View start = new View(this.sceneManager, this.sessionManager);
         start.build();
 
-        var scene = new Scene(start.getCanvas(), 925, 600);
+        var scene = new Scene(start.getCanvas(), 1200, 800);
         
-        this.sceneManager.setScene(scene);
+        this.sceneManager.setScene(scene, 1200, 800);
         
         stage.setScene(scene);
         stage.show();

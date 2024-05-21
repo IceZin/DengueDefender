@@ -4,6 +4,7 @@
  */
 package monitor.denguedefender.views;
 
+import components.DropDown;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -28,11 +29,14 @@ public class Login extends View {
    
     @Override
     public void build() {
+        int infoWidth = 700;
+        int loginWidth = 425;
+        
         Pane infoPane = new Pane();
-        infoPane.setPrefSize(500, 550);
+        infoPane.setPrefSize(infoWidth, 550);
         infoPane.relocate(25, 25);
         
-        Rectangle infoBackground = new Rectangle(450, 550, Color.WHITE);
+        Rectangle infoBackground = new Rectangle(infoWidth, 550, Color.WHITE);
         infoBackground.setArcHeight(10.0d);
         infoBackground.setArcWidth(10.0d);
         infoBackground.setEffect(new DropShadow(10, Color.GRAY));
@@ -40,10 +44,10 @@ public class Login extends View {
         infoPane.getChildren().addAll(infoBackground);
         
         Pane loginPane = new Pane();
-        loginPane.setPrefSize(400, 550);
-        loginPane.relocate(500, 25);
+        loginPane.setPrefSize(loginWidth, 550);
+        loginPane.relocate(infoWidth + 50, 25);
         
-        Rectangle loginBox = new Rectangle(400, 550, Color.WHITE);
+        Rectangle loginBox = new Rectangle(loginWidth, 550, Color.WHITE);
         loginBox.setArcHeight(10.0d);
         loginBox.setArcWidth(10.0d);
         loginBox.setEffect(new DropShadow(10, Color.GRAY));
@@ -55,16 +59,16 @@ public class Login extends View {
         t2.setStyle("-fx-font-size: 14px");
         
         TextField cpfInput = new TextField();
-        cpfInput.setPrefSize(350, 40);
+        cpfInput.setPrefSize(loginWidth - 50, 40);
         cpfInput.relocate(25, 80);
         cpfInput.setStyle("-fx-border-radius: 5;");
         cpfInput.setPromptText("Insira seu CPF");
         
         Text cpfInfo = new Text(25, 130, "Insira seu CPF para se cadastrar ou acessar nosso sistema");
-        cpfInfo.setStyle("-fx-font-size: 10px;");
+        cpfInfo.setStyle("-fx-font-size: 11px;");
         
         Button continueBtn = new Button("Continuar");
-        continueBtn.setPrefSize(350, 40);
+        continueBtn.setPrefSize(loginWidth - 50, 40);
         continueBtn.relocate(25, 150);
         continueBtn.setStyle(
             "-fx-border-radius: 5; -fx-background-color: #1351B4; -fx-font-size: 14px; -fx-font-weight: 700; -fx-text-fill: white; -fx-cursor: hand;"
@@ -72,7 +76,7 @@ public class Login extends View {
         continueBtn.setOnAction(e -> this.handleContinue(e, cpfInput));
         
         Button visitorAcessBtn = new Button("Acessar como Visitante");
-        visitorAcessBtn.setPrefSize(350, 40);
+        visitorAcessBtn.setPrefSize(loginWidth - 50, 40);
         visitorAcessBtn.relocate(25, 200);
         visitorAcessBtn.setStyle(
             "-fx-border-radius: 5; -fx-background-color: #53AF32; -fx-font-size: 14px; -fx-font-weight: 700; -fx-text-fill: white; -fx-cursor: hand;"

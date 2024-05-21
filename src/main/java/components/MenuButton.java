@@ -22,7 +22,7 @@ public class MenuButton extends Pane {
     private final StackPane placeholder = new StackPane();
     private final Button button = new Button();
     
-    public MenuButton(String name, String imagePath, int x, int y) {
+    public MenuButton(String name, String imagePath, int x, int y, double scale) {
         super();
         
         this.relocate(x, y);
@@ -30,10 +30,10 @@ public class MenuButton extends Pane {
         Image image = new Image(imagePath);
         ImageView icon = new ImageView(image);
         
-        icon.setFitHeight(35);
-        icon.setFitWidth(35);
+        icon.setFitHeight(35 * scale);
+        icon.setFitWidth(35 * scale);
         
-        this.button.setPrefSize(70, 70);
+        this.button.setPrefSize(70 * scale, 70 * scale);
         this.button.setGraphic(icon);
         this.button.setStyle(
             "-fx-background-radius: 10; -fx-background-color: #1351B4; -fx-cursor: hand;"

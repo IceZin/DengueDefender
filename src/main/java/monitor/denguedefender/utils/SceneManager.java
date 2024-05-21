@@ -17,6 +17,9 @@ public class SceneManager {
     private final Map<String, View> scenes = new HashMap<>();
     private Scene scene;
     
+    private int width = 0;
+    private int height = 0;
+    
     public void add(String sceneKey, View scene) {
         this.scenes.put(sceneKey, scene);
     }
@@ -25,7 +28,17 @@ public class SceneManager {
         this.scene.setRoot(this.scenes.get(sceneKey).getCanvas());
     }
     
-    public void setScene(Scene scene) {
+    public void setScene(Scene scene, int width, int height) {
         this.scene = scene;
+        this.width = width;
+        this.height = height;
+    }
+    
+    public int getWidth() {
+        return this.width;
+    }
+    
+    public int getHeight() {
+        return this.height;
     }
 }
