@@ -23,38 +23,154 @@
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
         <script>
             let map;
+            let selectedPos;
+            let selectedCity;
+            let selectedNeighborhood;
+            let areaDistance = 0.02;
+            
+            let reports = [];
+            let areas = [];
 
             async function initMap() {
                 const position = { lat: -23.555693, lng: -46.639480 };
                 
                 //@ts-ignore
                 const { Map } = await google.maps.importLibrary("maps");
-                const { AdvancedMarkerView } = await google.maps.importLibrary("marker");
+                const geocoder = new google.maps.Geocoder();
 
                 map = new Map(document.getElementById("map"), {
                     zoom: 4,
                     center: position,
-                    mapId: "DEMO_MAP_ID"
+                    mapId: "DEMO_MAP_ID",
+                    clickableIcons: false
                 });
-
-                const marker = new AdvancedMarkerView({
-                    map: map,
-                    position: position,
-                    title: "São Paulo"
+                
+                let infoWindow;
+                
+                map.addListener("click", (mapsMouseEvent) => {
+                    // Close the current InfoWindow.
+                    if (infoWindow) {
+                        infoWindow.close();
+                    }
+                    // Create a new InfoWindow.
+                    infoWindow = new google.maps.InfoWindow({
+                      position: mapsMouseEvent.latLng
+                    });
+                    infoWindow.setContent(
+                      JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2),
+                    );
+                    infoWindow.open(map);
+                    
+                    geocoder.geocode({'latLng': mapsMouseEvent.latLng}, (results, status) => {
+                        console.log(results);
+                        console.log(status);
+                        
+                        if (status === google.maps.GeocoderStatus.OK) {
+                            if (results[1]) {
+                                let addressComponents = results[1].address_components;
+                                
+                                addressComponents.forEach(component => {
+                                    if (component.types.includes("sublocality")) {
+                                        selectedNeighborhood = component.long_name;
+                                    } else if (component.types.includes("administrative_area_level_2")) {
+                                        selectedCity = component.long_name;
+                                    }
+                                });
+                            }
+                        }
+                    });
+                    
+                    selectedPos = mapsMouseEvent.latLng.toJSON();
                 });
             }
             
-            function addArea(center, value) {
+            function getPosInfo() {
+                if (selectedPos) {
+                    return `${selectedPos.lat}, ${selectedPos.lng}, ${selectedCity}, ${selectedNeighborhood}`;
+                }
+                
+                return undefined;
+            }
+            
+            function addReport(lat, lng) {
+                reports.push({lat, lng, value: 1});
+            }
+            
+            function clearAreas() {
+                for (let i = 0; i < areas.length; i++) {
+                    areas[i].setMap(null);
+                }
+                
+                areas = [];
+                reports = [];
+            }
+            
+            function showAreas() {
+                let reportsCopy = [...reports];
+                let processedReports = [];
+                
+//                reportsCopy.forEach(report => {
+//                    addArea({lat: report.lat, lng: report.lng}, 50, 0.001);
+//                });
+                
+                while (reportsCopy.length > 0) {
+                    let mainReport = reportsCopy.pop(0, 1);
+                    let maxDistance = 0.002;
+                    
+                    let nearPoints = reportsCopy.filter((report) => {
+                        let d = distance(mainReport, report);
+                        
+                        if (d > maxDistance && d <= areaDistance) {
+                            maxDistance = d;
+                        }
+                        
+                        return d <= areaDistance;
+                    });
+                    
+                    mainReport.value += nearPoints.length;
+                    mainReport.radius = maxDistance;
+                    
+                    reportsCopy = reportsCopy.filter((report) => {
+                        return distance(mainReport, report) > areaDistance;
+                    });
+                    
+                    processedReports.push(mainReport);
+                }
+                
+                processedReports.forEach(report => {
+                    addArea({lat: report.lat, lng: report.lng}, report.value * 2, report.radius);
+                });
+            }
+            
+            function distance(x, y) {
+                return Math.sqrt(
+                    Math.pow(Math.abs(y.lat - x.lat), 2) +
+                    Math.pow(Math.abs(y.lng - x.lng), 2)
+                );
+            }
+            
+            function addArea(center, value, radius) {
+                let color = "#66CC00";
+                
+                if (value >= 10 && value <= 20) {
+                    color = "#FF7A00";
+                } else if (value > 20) {
+                    color = "#FF0000";
+                }
+                
                 const areaCircle = new google.maps.Circle({
-                    strokeColor: "#FF0000",
+                    strokeColor: color,
                     strokeOpacity: 0.8,
                     strokeWeight: 2,
-                    fillColor: "#FF0000",
+                    fillColor: color,
                     fillOpacity: 0.35,
                     map,
                     center: center,
-                    radius: Math.sqrt(value) * 100
+                    radius: radius * 110000,
+                    clickable: false
                 });
+                
+                areas.push(areaCircle);
             }
         </script>
     </head>

@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import monitor.denguedefender.utils.PostgresConnector;
+import monitor.denguedefender.utils.SessionManager;
 /**
  *
  * @author victo
@@ -25,9 +26,11 @@ public class Report {
     private String neighborhood;
     private String address;
     private Date date;
+    private double lat;
+    private double lng;
     private int userId;
     
-    private Report loadFromResultSet(ResultSet rs) throws SQLException {
+    private static Report loadFromResultSet(ResultSet rs) throws SQLException {
         Report report = new Report();
         
         report.setId(rs.getInt(1));
@@ -35,10 +38,42 @@ public class Report {
         report.setCity(rs.getString(3));
         report.setNeighborhood(rs.getString(4));
         report.setAddress(rs.getString(5));
-        report.setDate(rs.getDate(6));
-        report.setUserId(rs.getInt(7));
+        report.setLatitude(rs.getDouble(7));
+        report.setLongitude(rs.getDouble(8));
+        report.setUserId(rs.getInt(9));
+        report.setDate(rs.getDate(10));
         
         return report;
+    }
+    
+    public void save() {
+        System.out.println("Saving report");
+        
+        System.out.println(SessionManager.session.getUser().getId());
+        System.out.println(this.id);
+        
+        if (this.id == 0 && SessionManager.session.getUser() != null) {
+            try {
+                Connection conn = PostgresConnector.postgres.getConnection();
+                
+                this.date = new Date();
+
+                PreparedStatement st = conn.prepareStatement(
+                    "INSERT INTO reports (type, city, neighborhood, latitude, longitude, user_id, date) values (?, ?, ?, ?, ?, ?, ?);"
+                );
+                st.setInt(1, this.type);
+                st.setString(2, this.city);
+                st.setString(3, this.neighborhood);
+                st.setDouble(4, this.lat);
+                st.setDouble(5, this.lng);
+                st.setInt(6, SessionManager.session.getUser().getId());
+                st.setDate(7, new java.sql.Date(this.date.getTime()));
+
+                st.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     public ArrayList<Report> selectByCity(String searchCity) {
@@ -55,7 +90,29 @@ public class Report {
             ResultSet rs = st.executeQuery();
             
             while (rs.next()) {
-                reports.add(this.loadFromResultSet(rs));
+                reports.add(Report.loadFromResultSet(rs));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return reports;
+    }
+    
+    public static ArrayList<Report> selectAll() {
+        ArrayList<Report> reports = new ArrayList<>();
+        
+        try {
+            Connection conn = PostgresConnector.postgres.getConnection();
+            
+            PreparedStatement st = conn.prepareStatement(
+                "SELECT * FROM reports;"
+            );
+            
+            ResultSet rs = st.executeQuery();
+            
+            while (rs.next()) {
+                reports.add(Report.loadFromResultSet(rs));
             }
         } catch (SQLException ex) {
             Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,7 +132,9 @@ public class Report {
             ResultSet rs = st.executeQuery("SELECT DISTINCT city FROM reports;");
             
             while (rs.next()) {
-                cities.add(rs.getString(1));
+                String city = rs.getString(1);
+                cities.add(city);
+                System.out.println(city);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
@@ -153,6 +212,22 @@ public class Report {
     
     public Date getDate() {
         return this.date;
+    }
+    
+    public void setLatitude(double lat) {
+        this.lat = lat;
+    }
+    
+    public double getLatitude() {
+        return this.lat;
+    }
+    
+    public void setLongitude(double lng) {
+        this.lng = lng;
+    }
+    
+    public double getLongitude() {
+        return this.lng;
     }
     
     public void setUserId(int userId) {

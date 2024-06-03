@@ -11,6 +11,8 @@ import monitor.denguedefender.models.User;
  * @author victo
  */
 public class SessionManager {
+    public static SessionManager session = new SessionManager();
+    
     private User user;
     private boolean visitorSession;
     

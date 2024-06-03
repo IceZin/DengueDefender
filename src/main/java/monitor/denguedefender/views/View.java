@@ -35,6 +35,10 @@ public class View {
         this.canvas.getChildren().addAll(circle, rectangle);
     }
     
+    public void load() {
+        
+    }
+    
     public Pane getCanvas() {
         return this.canvas;
     }

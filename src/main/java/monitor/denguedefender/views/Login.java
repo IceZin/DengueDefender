@@ -4,7 +4,6 @@
  */
 package monitor.denguedefender.views;
 
-import components.DropDown;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -12,9 +11,8 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import monitor.denguedefender.models.User;
 import monitor.denguedefender.utils.SceneManager;
 import monitor.denguedefender.utils.SessionManager;
 
@@ -23,31 +21,54 @@ import monitor.denguedefender.utils.SessionManager;
  * @author victo
  */
 public class Login extends View {
+    private User insertedUser;
+    
     public Login(SceneManager sceneManager, SessionManager sessionManager) {
         super(sceneManager, sessionManager);
+    }
+    
+    private Pane buildInfo() {
+        Pane newsBox = new Pane();
+        newsBox.setPrefSize(650, 100);
+        newsBox.relocate(50, 50);
+        
+        Text newsTitle = new Text(0, 0, "Alerta para o aumento de casos de dengue");
+        newsTitle.setStyle("-fx-font-size: 20px; -fx-font-weight: 700;");
+        
+        Text newsDate = new Text(0, 20, "maio 01, 2024");
+        newsDate.setStyle("-fx-font-size: 12px; -fx-text-fill: #eeeeee;");
+        
+        Text newsText = new Text(0, 60, " No nosso App você pode ter acesso a "
+            + "diversas informacões de como se prevenir\ndo mosquito da dengue, "
+            + "além de poder visualizar áreas que possuem alertas\npara maiores "
+            + "incidencias do caso."
+        );
+        newsText.setStyle("-fx-font-size: 14px;");
+        
+        newsBox.getChildren().addAll(newsTitle, newsDate, newsText);
+        
+        return newsBox;
     }
    
     @Override
     public void build() {
-        int infoWidth = 700;
+        int infoWidth = 675;
         int loginWidth = 425;
         
         Pane infoPane = new Pane();
-        infoPane.setPrefSize(infoWidth, 550);
-        infoPane.relocate(25, 25);
+        infoPane.setPrefSize(infoWidth, this.sceneManager.getHeight());
+        infoPane.relocate(this.sceneManager.getWidth() - infoWidth, 0);
         
-        Rectangle infoBackground = new Rectangle(infoWidth, 550, Color.WHITE);
-        infoBackground.setArcHeight(10.0d);
-        infoBackground.setArcWidth(10.0d);
+        Rectangle infoBackground = new Rectangle(infoWidth, this.sceneManager.getHeight(), Color.WHITE);
         infoBackground.setEffect(new DropShadow(10, Color.GRAY));
         
         infoPane.getChildren().addAll(infoBackground);
         
         Pane loginPane = new Pane();
-        loginPane.setPrefSize(loginWidth, 550);
-        loginPane.relocate(infoWidth + 50, 25);
+        loginPane.setPrefSize(loginWidth, 300);
+        loginPane.relocate(50, this.sceneManager.getHeight() / 2 - 150);
         
-        Rectangle loginBox = new Rectangle(loginWidth, 550, Color.WHITE);
+        Rectangle loginBox = new Rectangle(loginWidth, 300, Color.WHITE);
         loginBox.setArcHeight(10.0d);
         loginBox.setArcWidth(10.0d);
         loginBox.setEffect(new DropShadow(10, Color.GRAY));
@@ -55,17 +76,17 @@ public class Login extends View {
         Text t1 = new Text(25, 40, "Insira seus dados para iniciar a sessão:");
         t1.getStyleClass().add("bold-poppins");
         
-        Text t2 = new Text(25, 70, "CPF");
-        t2.setStyle("-fx-font-size: 14px");
+        Text loginFieldName = new Text(25, 70, "CPF");
+        loginFieldName.setStyle("-fx-font-size: 14px");
         
-        TextField cpfInput = new TextField();
-        cpfInput.setPrefSize(loginWidth - 50, 40);
-        cpfInput.relocate(25, 80);
-        cpfInput.setStyle("-fx-border-radius: 5;");
-        cpfInput.setPromptText("Insira seu CPF");
+        TextField loginInput = new TextField();
+        loginInput.setPrefSize(loginWidth - 50, 40);
+        loginInput.relocate(25, 80);
+        loginInput.setStyle("-fx-border-radius: 5;");
+        loginInput.setPromptText("Insira seu CPF");
         
-        Text cpfInfo = new Text(25, 130, "Insira seu CPF para se cadastrar ou acessar nosso sistema");
-        cpfInfo.setStyle("-fx-font-size: 11px;");
+        Text loginInfo = new Text(25, 130, "Insira seu CPF para se cadastrar ou acessar nosso sistema");
+        loginInfo.setStyle("-fx-font-size: 11px;");
         
         Button continueBtn = new Button("Continuar");
         continueBtn.setPrefSize(loginWidth - 50, 40);
@@ -73,7 +94,7 @@ public class Login extends View {
         continueBtn.setStyle(
             "-fx-border-radius: 5; -fx-background-color: #1351B4; -fx-font-size: 14px; -fx-font-weight: 700; -fx-text-fill: white; -fx-cursor: hand;"
         );
-        continueBtn.setOnAction(e -> this.handleContinue(e, cpfInput));
+        continueBtn.setOnAction(e -> this.handleContinue(e, loginInput, loginFieldName, loginInfo));
         
         Button visitorAcessBtn = new Button("Acessar como Visitante");
         visitorAcessBtn.setPrefSize(loginWidth - 50, 40);
@@ -84,15 +105,38 @@ public class Login extends View {
         visitorAcessBtn.setOnAction(e -> this.handleVisitorAccess(e));
         
         loginPane.getChildren().addAll(
-            loginBox, t1, t2, cpfInput, cpfInfo, continueBtn, visitorAcessBtn
+            loginBox, t1, loginFieldName, loginInput, loginInfo, continueBtn, visitorAcessBtn
         );
+        
+        infoPane.getChildren().add(this.buildInfo());
         
         this.canvas.getStylesheets().add("styles.css");
         this.canvas.getChildren().addAll(infoPane, loginPane);
     }
     
-    private void handleContinue(ActionEvent e, TextField cpfInput) {
-        System.out.println("Clicked " + cpfInput.getText());
+    private void handleContinue(ActionEvent e, TextField loginInput, Text loginFieldName, Text loginInfo) {
+        if (insertedUser == null) {
+            System.out.println("Clicked " + loginInput.getText());
+        
+            User user = User.getByDocument(loginInput.getText());
+
+            if (user != null) {
+                insertedUser = user;
+
+                loginInput.setText("");
+                loginInput.setPromptText("Insira sua senha");
+
+                loginFieldName.setText("SENHA");
+                loginInfo.setText("Insira sua senha para acessar nosso sistema");
+            } else {
+
+            }
+        } else {
+            if (insertedUser.getPassword().equals(loginInput.getText())) {
+                SessionManager.session.setUser(insertedUser);
+                sceneManager.show("home");
+            }
+        }
     }
     
     private void handleVisitorAccess(ActionEvent e) {

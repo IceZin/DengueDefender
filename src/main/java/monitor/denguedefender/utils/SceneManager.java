@@ -25,7 +25,9 @@ public class SceneManager {
     }
     
     public void show(String sceneKey) {
-        this.scene.setRoot(this.scenes.get(sceneKey).getCanvas());
+        View showScene = this.scenes.get(sceneKey);
+        this.scene.setRoot(showScene.getCanvas());
+        showScene.load();
     }
     
     public void setScene(Scene scene, int width, int height) {

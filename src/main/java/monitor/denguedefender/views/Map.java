@@ -4,8 +4,12 @@
  */
 package monitor.denguedefender.views;
 
+import components.DropDown;
 import components.Menu;
+import components.MenuButton;
 import components.TextBox;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
@@ -14,6 +18,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import maps.GoogleMaps;
+import monitor.denguedefender.models.Report;
 import monitor.denguedefender.utils.SceneManager;
 import monitor.denguedefender.utils.SessionManager;
 
@@ -22,6 +27,16 @@ import monitor.denguedefender.utils.SessionManager;
  * @author victo
  */
 public class Map extends View {
+    private final String[] reportTypes = {
+        "Possível foco de dengue",
+        "Água parada",
+        "Pessoas doentes na região",
+        "Local abandonado com passível contribuição de proliferação",
+        "Falta de saneamento básico",
+        "Acúmulo de lixo"
+    };
+    private Report currentReport;
+    private GoogleMaps maps;
 
     public Map(SceneManager sceneManager, SessionManager sessionManager) {
         super(sceneManager, sessionManager);
@@ -29,7 +44,7 @@ public class Map extends View {
     
     @Override
     public void build() {
-        GoogleMaps maps = new GoogleMaps(sceneManager.getWidth(), sceneManager.getHeight());
+        this.maps = new GoogleMaps(sceneManager.getWidth(), sceneManager.getHeight());
         Menu menu = new Menu(sceneManager);
         
         Pane bottomInfo = new Pane();
@@ -104,15 +119,85 @@ public class Map extends View {
             colorsInfoBg, greenInfo, orangeInfo, redInfo, greenCircle, orangeCircle, redCircle
         );
         
-        Button addPointBtn = new Button("Adicionar ponto");
-        addPointBtn.setPrefSize(350, 40);
-        addPointBtn.relocate(25, 200);
-        addPointBtn.setStyle(
-            "-fx-border-radius: 5; -fx-background-color: #53AF32; -fx-font-size: 14px; -fx-font-weight: 700; -fx-text-fill: white; -fx-cursor: hand;"
+        Pane modalView = new Pane();
+        modalView.setPrefSize(sceneManager.getWidth(), sceneManager.getHeight());
+        
+        Rectangle modalBg = new Rectangle(sceneManager.getWidth(), sceneManager.getHeight(), Color.BLACK);
+        modalBg.setOpacity(0.4);
+        
+        Pane reportModal = new Pane();
+        reportModal.relocate(sceneManager.getWidth() * 0.5 - 300, sceneManager.getHeight()* 0.5 - 75);
+        reportModal.setPrefSize(600, 150);
+        
+        Rectangle reportModalBg = new Rectangle(600, 150, Color.WHITE);
+        reportModalBg.setArcHeight(20.0d);
+        reportModalBg.setArcWidth(20.0d);
+        reportModalBg.setEffect(new DropShadow(10, Color.GRAY));
+        
+        DropDown reportType = new DropDown("reportType", 550, 30, "TIPO DENUNCIA");
+        reportType.relocate(25, 40);
+        reportType.setItems(new ArrayList<>(Arrays.asList(this.reportTypes)));
+        reportType.setOnUpdate(e -> {
+            this.currentReport.setType(Arrays.asList(this.reportTypes).indexOf(e.getValue()));
+        });
+        
+        Button createBtn = new Button("Denunciar");
+        createBtn.setPrefSize(250, 40);
+        createBtn.relocate(25, 90);
+        createBtn.setStyle(
+            "-fx-border-radius: 5; -fx-background-color: #1351B4; -fx-font-size: 14px; -fx-font-weight: 700; -fx-text-fill: white; -fx-cursor: hand;"
         );
-        addPointBtn.setOnAction(e -> maps.addPoint(-23.649299, -46.599699, 1000));
+        createBtn.setOnAction(e -> {
+            this.currentReport.save();
+            modalView.setVisible(false);
+            this.load();
+        });
+        
+        Button cancelBtn = new Button("Cancelar");
+        cancelBtn.setPrefSize(250, 40);
+        cancelBtn.relocate(325, 90);
+        cancelBtn.setStyle(
+            "-fx-border-radius: 5; -fx-background-color: #1351B4; -fx-font-size: 14px; -fx-font-weight: 700; -fx-text-fill: white; -fx-cursor: hand;"
+        );
+        cancelBtn.setOnAction(e -> {
+            this.currentReport = null;
+            modalView.setVisible(false);
+        });
+        
+        reportModal.getChildren().addAll(reportModalBg, createBtn, cancelBtn, reportType);
+        
+        modalView.getChildren().addAll(modalBg, reportModal);
+        
+        MenuButton registerReport = new MenuButton(
+            "Denunciar",
+            "report.png",
+            sceneManager.getWidth() - 225,
+            sceneManager.getHeight() - 175,
+            1.0
+        );
+        
+        modalView.setVisible(false);
+        
+        registerReport.setOnAction(e -> {
+            currentReport = maps.getPos();
+            
+            if (currentReport != null) {
+                modalView.setVisible(true);
+            }
+        });
         
         this.canvas.getStylesheets().add("styles.css");
-        this.canvas.getChildren().addAll(maps, menu, bottomInfo, colorsInfo, addPointBtn);
+        this.canvas.getChildren().addAll(maps, menu, bottomInfo, colorsInfo, registerReport, modalView);
+    }
+    
+    @Override
+    public void load() {
+        this.maps.clearAreas();
+        
+        for (Report report : Report.selectAll()) {
+            this.maps.addPoint(report.getLatitude(), report.getLongitude());
+        }
+        
+        this.maps.showAreas();
     }
 }

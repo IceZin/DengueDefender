@@ -5,9 +5,6 @@
 package components;
 
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
-import java.util.ArrayList;
 import java.util.Date;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;

@@ -5,7 +5,6 @@
 package components;
 
 import java.util.ArrayList;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
@@ -134,5 +133,9 @@ public class Table extends Pane {
         }
         
         this.content.setPrefSize(this.width, filteredItems.size() * this.itemSize);
+    }
+    
+    public void clearItems() {
+        this.items.clear();
     }
 }

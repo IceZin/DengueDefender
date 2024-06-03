@@ -8,11 +8,13 @@ import events.FieldUpdateEvent;
 import java.util.ArrayList;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -24,6 +26,7 @@ import javafx.scene.text.Text;
  */
 public class DropDown extends Pane {
     private ArrayList<String> items;
+    private final ArrayList<Button> itemsNode = new ArrayList<>();
     private boolean active = false;
     private final int width;
     private final int height;
@@ -65,13 +68,14 @@ public class DropDown extends Pane {
         );
         this.selector.setOnAction(e -> this.toggle());
         
-        this.itemsBox.setPrefSize(selectorWidth, 0);
+        this.itemsBox.setPrefSize(selectorWidth, 400);
         this.itemsBox.setHbarPolicy(ScrollBarPolicy.NEVER);
         this.itemsBox.setVbarPolicy(ScrollBarPolicy.NEVER);
         
         this.itemsBox.setContent(this.content);
-        this.itemsBox.relocate(0, selectorHeight + 10);
-        this.itemsBox.setVisible(false);
+        this.itemsBox.relocate(0, -2000);
+        
+        this.setPrefSize(this.width, this.height);
         
         this.getChildren().addAll(placeholder, selectorBg, selector, this.icon, this.itemsBox);
     }
@@ -79,12 +83,12 @@ public class DropDown extends Pane {
     private void toggle() {
         this.active = !this.active;
         
-        this.itemsBox.setVisible(this.active);
+        this.setPrefSize(this.width, this.height);
         
         if (active) {
-            this.itemsBox.setPrefSize(this.width, 400);
+            this.itemsBox.relocate(0, this.height + 10);
         } else {
-            this.itemsBox.setPrefSize(this.width, 0);
+            this.itemsBox.relocate(0, -2000);
         }
         
         this.icon.setRotate(this.icon.getRotate() + 180);
@@ -109,6 +113,7 @@ public class DropDown extends Pane {
     public void setItems(ArrayList<String> items) {
         this.items = (ArrayList<String>) items.clone();
         
+        this.itemsNode.clear();
         this.content.getChildren().clear();
         this.content.setPrefSize(this.width, items.size() * this.height);
         
