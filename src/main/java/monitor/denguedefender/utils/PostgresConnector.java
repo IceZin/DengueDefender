@@ -16,12 +16,12 @@ public class PostgresConnector {
     private Connection conn;
     
     public void connect() throws SQLException {
-        String url = "jdbc:postgresql://localhost/denguedefender";
+        String url = "jdbc:postgresql://localhost:5432/denguedefender";
         
         Properties props = new Properties();
-        props.setProperty("user", "denguedefender");
+        props.setProperty("user", "postgres");
         props.setProperty("password", "admin");
-        props.setProperty("ssl", "true");
+        props.setProperty("ssl", "false");
         
         this.conn = DriverManager.getConnection(url, props);
     }

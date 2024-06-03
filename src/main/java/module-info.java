@@ -5,5 +5,6 @@ module monitor.denguedefender {
     requires javafx.web;
     requires java.sql;
     requires java.desktop;
+    requires jdk.jsobject;
     exports monitor.denguedefender;
 }
