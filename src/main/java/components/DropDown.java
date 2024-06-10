@@ -8,20 +8,18 @@ import events.FieldUpdateEvent;
 import java.util.ArrayList;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 /**
- *
+ * Classe responsável por criar um elemento de drop down.
  * @author victo
  */
 public class DropDown extends Pane {
@@ -39,6 +37,14 @@ public class DropDown extends Pane {
     private final String id;
     private EventHandler<FieldUpdateEvent> onUpdate;
     
+    /**
+    * Construtor da classe Menu responsável por montar os elementos.
+    * 
+    * @param id              identificador único do drop down
+    * @param selectorWidth   largura do seletor
+    * @param selectorHeight  altura do seletor
+    * @param placeholderText texto de placeholder
+    **/
     public DropDown(String id, int selectorWidth, int selectorHeight, String placeholderText) {
         super();
         
@@ -80,6 +86,9 @@ public class DropDown extends Pane {
         this.getChildren().addAll(placeholder, selectorBg, selector, this.icon, this.itemsBox);
     }
     
+    /**
+    * Método reponsável por alternar o estado de exibição do drop down.
+    **/
     private void toggle() {
         this.active = !this.active;
         
@@ -94,6 +103,11 @@ public class DropDown extends Pane {
         this.icon.setRotate(this.icon.getRotate() + 180);
     }
     
+    /**
+    * Método acionado sempre que um item for selecionado.
+    * 
+    * @param index indice do item selecionado
+    **/
     private void select(int index) {
         if (this.onUpdate != null) {
             FieldUpdateEvent e = new FieldUpdateEvent(EventType.ROOT);
@@ -106,10 +120,20 @@ public class DropDown extends Pane {
         this.selector.setText(this.items.get(index));
     }
     
+    /**
+    * Método responsável por definir a ação de atualização do drop down
+    * 
+    * @param e instanciamento de um handler de evento
+    **/
     public void setOnUpdate(EventHandler<FieldUpdateEvent> e) {
         this.onUpdate = e;
     }
     
+    /**
+    * Método responsável por definir os itens do drop down
+    * 
+    * @param items lista de itens
+    **/
     public void setItems(ArrayList<String> items) {
         this.items = (ArrayList<String>) items.clone();
         

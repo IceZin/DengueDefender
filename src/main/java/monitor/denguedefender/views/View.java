@@ -12,7 +12,8 @@ import monitor.denguedefender.utils.SceneManager;
 import monitor.denguedefender.utils.SessionManager;
 
 /**
- *
+ * Classe genérica responsável por criar o corpo de uma view(tela), ao criar
+ * uma nova tela é preciso que essa classe View seja estendida.
  * @author victo
  */
 public class View {
@@ -20,11 +21,20 @@ public class View {
     protected SceneManager sceneManager = new SceneManager();
     protected SessionManager sessionManager = new SessionManager();
     
+    /**
+    * Construtor da classe View
+    * @param sceneManager   gerenciador de cenas
+    * @param sessionManager gerenciador de sessão
+    **/
     public View(SceneManager sceneManager, SessionManager sessionManager) {
         this.sceneManager = sceneManager;
         this.sessionManager = sessionManager;
     }
 
+   /**
+    * Método que é acionado somente quando a View é adicionada ao contexto do
+    * @see monitor.denguedefender.utils.SceneManager
+    */
     public void build() {
         Circle circle = new Circle(50,Color.BLUE);
         circle.relocate(20, 20);
@@ -35,10 +45,16 @@ public class View {
         this.canvas.getChildren().addAll(circle, rectangle);
     }
     
+    /**
+    * Método que é acionado toda vez que o usuário é redirecionado para a cena
+    **/
     public void load() {
         
     }
     
+    /**
+    * Método responsável por retornar o instanciamento do corpo da cena
+    **/
     public Pane getCanvas() {
         return this.canvas;
     }

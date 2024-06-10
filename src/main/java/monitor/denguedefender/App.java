@@ -1,15 +1,11 @@
 package monitor.denguedefender;
 
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import monitor.denguedefender.utils.PostgresConnector;
 import monitor.denguedefender.utils.SceneManager;
 import monitor.denguedefender.utils.SessionManager;
-import monitor.denguedefender.views.EventsCalendar;
 import monitor.denguedefender.views.Home;
 import monitor.denguedefender.views.Login;
 import monitor.denguedefender.views.Map;
@@ -31,11 +27,11 @@ public class App extends Application {
         View start = new View(this.sceneManager, this.sessionManager);
         start.build();
 
-        var scene = new Scene(start.getCanvas(), 1200, 800);
+        var mainScene = new Scene(start.getCanvas(), 1200, 800);
         
-        this.sceneManager.setScene(scene, 1200, 800);
+        this.sceneManager.setMainScene(mainScene, 1200, 800);
         
-        stage.setScene(scene);
+        stage.setScene(mainScene);
         stage.show();
         
         View login = new Login(this.sceneManager, this.sessionManager);
@@ -47,16 +43,12 @@ public class App extends Application {
         View map = new Map(this.sceneManager, this.sessionManager);
         map.build();
         
-        View calendar = new EventsCalendar(this.sceneManager, this.sessionManager);
-        calendar.build();
-        
         View reports = new Reports(this.sceneManager, this.sessionManager);
         reports.build();
         
         this.sceneManager.add("login", login);
         this.sceneManager.add("home", home);
         this.sceneManager.add("map", map);
-        this.sceneManager.add("calendar", calendar);
         this.sceneManager.add("reports", reports);
         
         this.sceneManager.show("login");

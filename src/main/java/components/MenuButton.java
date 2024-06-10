@@ -15,13 +15,22 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 /**
- *
+ * Classe responsável por criar um botão de menu.
  * @author victo
  */
 public class MenuButton extends Pane {
     private final StackPane placeholder = new StackPane();
     private final Button button = new Button();
     
+    /**
+    * Construtor da classe ReportItem responsável por montar os elementos.
+    * 
+    * @param name      nome do botão
+    * @param imagePath caminho da imagem do botão
+    * @param x         posição x
+    * @param y         posição y
+    * @param scale     escala do botão
+    **/
     public MenuButton(String name, String imagePath, int x, int y, double scale) {
         super();
         
@@ -57,14 +66,25 @@ public class MenuButton extends Pane {
         this.setOnMouseExited(e -> this.handleMouseExit());
     }
     
+    /**
+    * Método acionado toda vez que o mouse entrar na área do elemento.
+    **/
     private void handleMouseEnter() {
         this.placeholder.setVisible(true);
     }
     
+    /**
+    * Método acionado toda vez que o mouse sair da área do elemento.
+    **/
     private void handleMouseExit() {
         this.placeholder.setVisible(false);
     }
     
+    /**
+    * Método responsável por definir a ação de clique do botão.
+    * 
+    * @param e instanciamento de um handler de evento
+    **/
     public void setOnAction(EventHandler e) {
         this.button.setOnAction(e);
     }

@@ -23,7 +23,7 @@ import monitor.denguedefender.utils.SceneManager;
 import monitor.denguedefender.utils.SessionManager;
 
 /**
- *
+ * Classe responsável por montar a cena do mapa interativo.
  * @author victo
  */
 public class Map extends View {
@@ -38,10 +38,21 @@ public class Map extends View {
     private Report currentReport;
     private GoogleMaps maps;
 
+    /**
+    * Construtor da classe Reports
+    * @param sceneManager   gerenciador de cenas
+    * @param sessionManager gerenciador de sessão
+    **/
     public Map(SceneManager sceneManager, SessionManager sessionManager) {
         super(sceneManager, sessionManager);
     }
     
+    /**
+    * Método que é acionado somente quando a View é adicionada ao contexto do:
+    * @see monitor.denguedefender.utils.SceneManager
+    * 
+    * Nessa classe o método build é responsável por criar os elementos da cena
+    */
     @Override
     public void build() {
         this.maps = new GoogleMaps(sceneManager.getWidth(), sceneManager.getHeight());
@@ -190,6 +201,12 @@ public class Map extends View {
         this.canvas.getChildren().addAll(maps, menu, bottomInfo, colorsInfo, registerReport, modalView);
     }
     
+    /**
+    * Método que é acionado toda vez que o usuário é redirecionado para a cena.
+    * 
+    * Nessa classe o método load é responsável por buscar as denúncias no banco
+    * de dados e enviá-las ao mapa.
+    */
     @Override
     public void load() {
         this.maps.clearAreas();

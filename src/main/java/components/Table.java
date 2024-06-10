@@ -16,7 +16,7 @@ import monitor.denguedefender.utils.Filter;
 import monitor.denguedefender.utils.FilterRule;
 
 /**
- *
+ * Classe responsável por criar um elemento de tabela.
  * @author victo
  */
 public class Table extends Pane {
@@ -32,6 +32,13 @@ public class Table extends Pane {
     private final FilterRule cityFilterRule = new FilterRule();
     private final FilterRule neighborhoodFilterRule = new FilterRule();
     
+    /**
+    * Construtor da classe TableField responsável por montar os elementos.
+    * 
+    * @param width    largura da tabela
+    * @param height   altura da tabela
+    * @param itemSize tamanho dos itens da tabela
+    **/
     public Table(int width, int height, int itemSize) {
         super();
         
@@ -88,6 +95,9 @@ public class Table extends Pane {
         this.getChildren().addAll(background, header, tableScrollBox);
     }
     
+    /**
+    * Método responsável por criar um separador de item.
+    **/
     private Rectangle createSeparator() {
         Rectangle separator = new Rectangle(2, this.itemSize - 10, Color.valueOf("#E9E9E9"));
         separator.setArcHeight(1.0d);
@@ -96,12 +106,22 @@ public class Table extends Pane {
         return separator;
     }
     
+    /**
+    * Método responsável por adicionar um item a tabela.
+    * 
+    * @param item instanciamento de um item de denúncia
+    **/
     public void addItem(ReportItem item) {
         this.items.add(item);
         
         item.build(this.width - 20, this.itemSize);
     }
     
+    /**
+    * Método responsável por aplicar o filtro de cidade.
+    * 
+    * @param city nome da cidade
+    **/
     public void applyCityFilter(String city) {
         this.cityFilterRule.setComparisionValue(city);
         
@@ -110,6 +130,11 @@ public class Table extends Pane {
         this.show();
     }
     
+    /**
+    * Método responsável por aplicar o filtro de bairro.
+    * 
+    * @param neighborhood nome do bairro
+    **/
     public void applyNeighborhoodFilter(String neighborhood) {
         this.neighborhoodFilterRule.setComparisionValue(neighborhood);
         
@@ -118,6 +143,9 @@ public class Table extends Pane {
         this.show();
     }
     
+    /**
+    * Método responsável por exibir os itens filtrados na tabela.
+    **/
     public final void show() {
         this.content.getChildren().clear();
         
@@ -135,6 +163,9 @@ public class Table extends Pane {
         this.content.setPrefSize(this.width, filteredItems.size() * this.itemSize);
     }
     
+    /**
+    * Método responsável por limpar os itens da tabela.
+    **/
     public void clearItems() {
         this.items.clear();
     }

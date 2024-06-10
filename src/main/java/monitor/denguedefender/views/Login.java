@@ -17,16 +17,25 @@ import monitor.denguedefender.utils.SceneManager;
 import monitor.denguedefender.utils.SessionManager;
 
 /**
- *
+ * Classe responsável por montar a cena de login.
  * @author victo
  */
 public class Login extends View {
     private User insertedUser;
     
+    /**
+    * Construtor da classe Reports
+    * @param sceneManager   gerenciador de cenas
+    * @param sessionManager gerenciador de sessão
+    **/
     public Login(SceneManager sceneManager, SessionManager sessionManager) {
         super(sceneManager, sessionManager);
     }
     
+    /**
+    * Método responsável por criar o elemento de notícia e retornar seu
+    * instanciamento
+    */
     private Pane buildInfo() {
         Pane newsBox = new Pane();
         newsBox.setPrefSize(650, 100);
@@ -49,7 +58,13 @@ public class Login extends View {
         
         return newsBox;
     }
-   
+    
+    /**
+    * Método que é acionado somente quando a View é adicionada ao contexto do:
+    * @see monitor.denguedefender.utils.SceneManager
+    * 
+    * Nessa classe o método build é responsável por criar os elementos da cena
+    */
     @Override
     public void build() {
         int infoWidth = 675;
@@ -114,6 +129,15 @@ public class Login extends View {
         this.canvas.getChildren().addAll(infoPane, loginPane);
     }
     
+    /**
+    * Método que é acionado toda vez em que o botão de Continuar for pressionado,
+    * quando executado verifica no banco o usuário e realiza a autenticação.
+    * 
+    * @param e              evento de ação do botão
+    * @param loginInput     campo de texto
+    * @param loginFieldName elemento de texto(nome do campo)
+    * @param loginInfo      elemento de texto(informações adicionais)
+    */
     private void handleContinue(ActionEvent e, TextField loginInput, Text loginFieldName, Text loginInfo) {
         if (insertedUser == null) {
             System.out.println("Clicked " + loginInput.getText());
@@ -134,13 +158,19 @@ public class Login extends View {
         } else {
             if (insertedUser.getPassword().equals(loginInput.getText())) {
                 SessionManager.session.setUser(insertedUser);
-                sceneManager.show("home");
+                sceneManager.show("map");
             }
         }
     }
     
+    /**
+    * Método que é acionado toda vez em que o botão de Acessar como visitante
+    * for pressionado
+    * 
+    * @param e evento de ação do botão
+    */
     private void handleVisitorAccess(ActionEvent e) {
         this.sessionManager.setVisitorSession(true);
-        this.sceneManager.show("home");
+        this.sceneManager.show("map");
     }
 }
