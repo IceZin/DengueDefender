@@ -158,7 +158,7 @@ public class Login extends View {
         } else {
             if (insertedUser.getPassword().equals(loginInput.getText())) {
                 SessionManager.session.setUser(insertedUser);
-                sceneManager.show("map");
+                sceneManager.show("reports");
             }
         }
     }
@@ -171,6 +171,6 @@ public class Login extends View {
     */
     private void handleVisitorAccess(ActionEvent e) {
         this.sessionManager.setVisitorSession(true);
-        this.sceneManager.show("map");
+        this.sceneManager.show("reports");
     }
 }
