@@ -4,6 +4,9 @@
 Esta aplicação foi desenvolvida em Java, utilizando a lib JavaFX para a interface gráfica, esse projeto é responsável por gerenciar e exibir denúncias feitas por usuários,
 integrando com a API do Google Maps através de uma página web que é renderizada pelo JavaFX.
 
+### Slides de introdução
+https://dengue-zero.my.canva.site
+
 ## Configurando
 ### Java e Dependencias
 Todos pacotes e serviços necessários já estão incluidos neste repositório, exceto a SDK do Java.
