@@ -11,11 +11,9 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import monitor.denguedefender.utils.Filter;
-import monitor.denguedefender.utils.FilterRule;
 
 /**
- *
+ * Classe responsável por criar um elemento de caixa de filtro.
  * @author victo
  */
 public class FilterBox extends Pane {
@@ -26,6 +24,12 @@ public class FilterBox extends Pane {
     private final DropDown cityDp;
     private final DropDown neighborhoodDp;
     
+    /**
+    * Construtor da classe Menu responsável por montar os elementos.
+    * 
+    * @param width  largura da caixa de filtro
+    * @param height altura da caixa de filtro
+    **/
     public FilterBox(int width, int height) {
         super();
         
@@ -52,22 +56,42 @@ public class FilterBox extends Pane {
         this.getChildren().addAll(background, cityDp, neighborhoodDp);
     }
     
+    /**
+    * Método responsável por definir a ação atualização do campo de filtro.
+    * 
+    * @param e instanciamento de um handler de evento de atualização de campo
+    **/
     public void setOnUpdate(EventHandler<FieldUpdateEvent> e) {
         this.onCityUpdate = e;
     }
     
+    /**
+    * Método responsável por acionar o evento de atualização de cidade.
+    * 
+    * @param e evento de atualização de campo
+    **/
     private void triggerOnUpdate(FieldUpdateEvent e) {
         if (this.onCityUpdate != null) {
             this.onCityUpdate.handle(e);
         }
     }
     
+    /**
+    * Método responsável por definir as cidades.
+    * 
+    * @param items lista de cidades
+    **/
     public void setCities(ArrayList<String> items) {
         this.cities = (ArrayList<String>) items.clone();
         
         this.cityDp.setItems(this.cities);
     }
     
+    /**
+    * Método responsável por definir os bairros.
+    * 
+    * @param items lista de bairros
+    **/
     public void setNeighborhoods(ArrayList<String> items) {
         this.neighborhoods = (ArrayList<String>) items.clone();
         this.neighborhoods.add(0, "Todos");

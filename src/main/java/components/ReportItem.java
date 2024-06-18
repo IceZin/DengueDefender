@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /**
- *
+ * Classe responsável por criar um elemento de item de denúncia.
  * @author victo
  */
 public class ReportItem extends Pane {
@@ -29,6 +29,14 @@ public class ReportItem extends Pane {
     private final String neighborhood;
     private final Date date;
     
+    /**
+    * Construtor da classe ReportItem.
+    * 
+    * @param reportType   tipo de denúncia
+    * @param city         cidade da denúncia
+    * @param neighborhood bairro da denúncia
+    * @param date         data da denúncia
+    **/
     public ReportItem(int reportType, String city, String neighborhood, Date date) {
         super();
         
@@ -38,6 +46,12 @@ public class ReportItem extends Pane {
         this.date = date;
     }
     
+    /**
+    * Método responsável por montar os elementos.
+    * 
+    * @param width  largura de denúncia
+    * @param height altura da denúncia
+    **/
     public void build(int width, int height) {
         Rectangle separator = new Rectangle(width, 2, Color.valueOf("#E9E9E9"));
         separator.relocate(0, 0);
@@ -55,10 +69,16 @@ public class ReportItem extends Pane {
         this.getChildren().addAll(separator, reportWithCity, neighborhoodField, dateField);
     }
     
+    /**
+    * Método responsável por retornar a cidade da denúncia.
+    **/
     public String getCity() {
         return this.city;
     }
     
+    /**
+    * Método responsável por retornar o bairro da denúncia.
+    **/
     public String getNeighborhood() {
         return this.neighborhood;
     }

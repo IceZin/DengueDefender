@@ -11,10 +11,15 @@ import javafx.scene.shape.Rectangle;
 import monitor.denguedefender.utils.SceneManager;
 
 /**
- *
+ * Classe responsável por criar um elemento de menu.
  * @author victo
  */
 public class Menu extends Pane {
+    /**
+    * Construtor da classe Menu responsável por montar os elementos.
+    * 
+    * @param sceneManager instanciamento do gerenciador de cenas
+    **/
     public Menu(SceneManager sceneManager) {
         super();
         
@@ -34,6 +39,6 @@ public class Menu extends Pane {
         mapView.setOnAction(e -> sceneManager.show("map"));
         reportsView.setOnAction(e -> sceneManager.show("reports"));
         
-        this.getChildren().addAll(background, dashboardView, mapView,reportsView);
+        this.getChildren().addAll(background, dashboardView, mapView, reportsView);
     }
 }

@@ -8,13 +8,17 @@ import java.util.Properties;
 import java.sql.*;
 
 /**
- *
+ * Classe responsável por se conectar ao bancos de dados.
  * @author victo
  */
 public class PostgresConnector {
     public static PostgresConnector postgres = new PostgresConnector();
     private Connection conn;
     
+    /**
+    * Método responsável por se conectar ao banco.
+    * @author victo
+    */
     public void connect() throws SQLException {
         String url = "jdbc:postgresql://localhost:15432/denguedefender";
         
@@ -26,6 +30,10 @@ public class PostgresConnector {
         this.conn = DriverManager.getConnection(url, props);
     }
     
+    /**
+    * Método responsável por retornar a conexão atual com o banco
+    * @author victo
+    */
     public Connection getConnection() {
         return this.conn;
     }

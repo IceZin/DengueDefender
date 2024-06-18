@@ -15,8 +15,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import monitor.denguedefender.utils.PostgresConnector;
 import monitor.denguedefender.utils.SessionManager;
+
 /**
- *
+ * Classe responsável por criar um modelo de denúncia para integrar com o banco
+ * de dados.
+ * 
  * @author victo
  */
 public class Report {
@@ -30,6 +33,12 @@ public class Report {
     private double lng;
     private int userId;
     
+    /**
+    * Método responsável por criar uma instancia de denúncia a partir do resultado
+    * de busca no banco de dados.
+    * 
+    * @param rs resultado da busca no banco de dados
+    */
     private static Report loadFromResultSet(ResultSet rs) throws SQLException {
         Report report = new Report();
         
@@ -46,6 +55,9 @@ public class Report {
         return report;
     }
     
+    /**
+    * Método responsável por salvar a instancia atual da denúncia.
+    */
     public void save() {
         System.out.println("Saving report");
         
@@ -76,6 +88,11 @@ public class Report {
         }
     }
     
+    /**
+    * Método responsável por retornar todas as denúncias a partir de uma cidade.
+    * 
+    * @param searchCity nome da cidade
+    */
     public ArrayList<Report> selectByCity(String searchCity) {
         ArrayList<Report> reports = new ArrayList<>();
         
@@ -99,6 +116,9 @@ public class Report {
         return reports;
     }
     
+    /**
+    * Método responsável por retornar todas as denúncias.
+    */
     public static ArrayList<Report> selectAll() {
         ArrayList<Report> reports = new ArrayList<>();
         
@@ -121,6 +141,9 @@ public class Report {
         return reports;
     }
     
+    /**
+    * Método responsável por retornar todas as cidades distintas das denúncias.
+    */
     public static ArrayList<String> getDistinctCities() {
         ArrayList<String> cities = new ArrayList<>();
         
@@ -143,6 +166,11 @@ public class Report {
         return cities;
     }
     
+    /**
+    * Método responsável por retornar todos os bairros disintos de uma cidade.
+    * 
+    * @param searchCity nome da cidade
+    */
     public static ArrayList<String> getDistinctNeighborhoods(String searchCity) {
         ArrayList<String> neighborhoods = new ArrayList<>();
         
@@ -166,74 +194,146 @@ public class Report {
         return neighborhoods;
     }
     
+    /**
+    * Método responsável por definir o id de uma denúncia.
+    * 
+    * @param id id da denúncia
+    */
     public void setId(int id) {
         this.id = id;
     }
     
+    /**
+    * Método responsável por retornar o id de uma denúncia.
+    */
     public int getId() {
         return this.id;
     }
     
+    /**
+    * Método responsável por definir o tipo de uma denúncia.
+    * 
+    * @param type tipo da denúncia
+    */
     public void setType(int type) {
         this.type = type;
     }
     
+    /**
+    * Método responsável por retornar o tipo de uma denúncia.
+    */
     public int getType() {
         return this.type;
     }
     
+    /**
+    * Método responsável por definir a cidade de uma denúncia.
+    * 
+    * @param city cidade da denúncia
+    */
     public void setCity(String city) {
         this.city = city;
     }
     
+    /**
+    * Método responsável por retornar a cidade de uma denúncia.
+    */
     public String getCity() {
         return this.city;
     }
     
+    /**
+    * Método responsável por definir o bairro de uma denúncia.
+    * 
+    * @param neighborhood bairro da denúncia
+    */
     public void setNeighborhood(String neighborhood) {
         this.neighborhood = neighborhood;
     }
     
+    /**
+    * Método responsável por retornar o bairro de uma denúncia.
+    */
     public String getNeighborhood() {
         return this.neighborhood;
     }
     
+    /**
+    * Método responsável por definir o endereço de uma denúncia.
+    * 
+    * @param address endereço da denúncia
+    */
     public void setAddress(String address) {
         this.address = address;
     }
     
+    /**
+    * Método responsável por retornar o endereço de uma denúncia.
+    */
     public String getAddress() {
         return this.address;
     }
     
+    /**
+    * Método responsável por definir a data de uma denúncia.
+    * 
+    * @param date data da denúncia
+    */
     public void setDate(Date date) {
         this.date = date;
     }
     
+    /**
+    * Método responsável por retornar a data de uma denúncia.
+    */
     public Date getDate() {
         return this.date;
     }
     
+    /**
+    * Método responsável por definir a latitude de uma denúncia.
+    * 
+    * @param lat latitude da denúncia
+    */
     public void setLatitude(double lat) {
         this.lat = lat;
     }
     
+    /**
+    * Método responsável por retornar a latitude de uma denúncia.
+    */
     public double getLatitude() {
         return this.lat;
     }
     
+    /**
+    * Método responsável por definir a longitude de uma denúncia.
+    * 
+    * @param lng longitude da denúncia
+    */
     public void setLongitude(double lng) {
         this.lng = lng;
     }
     
+    /**
+    * Método responsável por retornar a longitude de uma denúncia.
+    */
     public double getLongitude() {
         return this.lng;
     }
     
+    /**
+    * Método responsável por definir o id do usuário de uma denúncia.
+    * 
+    * @param userId id do usuário
+    */
     public void setUserId(int userId) {
         this.userId = userId;
     }
     
+    /**
+    * Método responsável por retornar o id do usuário de uma denúncia.
+    */
     public int getUserId() {
         return this.userId;
     }

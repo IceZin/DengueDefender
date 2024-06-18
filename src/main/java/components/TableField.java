@@ -8,13 +8,11 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 /**
- *
+ * Classe responsável por criar um elemento de campo de tabela.
  * @author victo
  */
 public class TableField extends Pane {
@@ -22,8 +20,15 @@ public class TableField extends Pane {
     private final int width;
     private final int height;
     private final Text field;
-    private final boolean center;
     
+    /**
+    * Construtor da classe TableField responsável por montar os elementos.
+    * 
+    * @param width  largura do campo de tabela
+    * @param height altura do campo de tabela
+    * @param text   texto a ser exibido
+    * @param center parametro para identificar se o texto deve ser centralizado
+    **/
     public TableField(int width, int height, String text, boolean center) {
         super();
         
@@ -31,7 +36,6 @@ public class TableField extends Pane {
         
         this.width = width;
         this.height = height;
-        this.center = center;
         
         this.field = new Text(0, height * 0.5 + 4, text);
         this.field.setWrappingWidth(width);
