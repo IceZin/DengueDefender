@@ -28,14 +28,12 @@ public class Menu extends Pane {
         
         MenuButton dashboardView = new MenuButton("Página inicial", "dashboard.png", 15, 15, 1.0);
         MenuButton mapView = new MenuButton("Mapa de incidencias", "map.png", 15, 100, 1.0);
-        MenuButton calendarView = new MenuButton("Calendário de eventos", "calendar.png", 15, 185, 1.0);
-        MenuButton reportsView = new MenuButton("Denúncias", "report.png", 15, 270, 1.0);
+        MenuButton reportsView = new MenuButton("Denúncias", "report.png", 15, 185, 1.0);
         
         dashboardView.setOnAction(e -> sceneManager.show("home"));
         mapView.setOnAction(e -> sceneManager.show("map"));
-        calendarView.setOnAction(e -> sceneManager.show("calendar"));
         reportsView.setOnAction(e -> sceneManager.show("reports"));
         
-        this.getChildren().addAll(background, dashboardView, mapView, calendarView, reportsView);
+        this.getChildren().addAll(background, dashboardView, mapView,reportsView);
     }
 }

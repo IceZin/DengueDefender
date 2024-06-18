@@ -16,7 +16,7 @@ public class PostgresConnector {
     private Connection conn;
     
     public void connect() throws SQLException {
-        String url = "jdbc:postgresql://localhost:5432/denguedefender";
+        String url = "jdbc:postgresql://localhost:15432/denguedefender";
         
         Properties props = new Properties();
         props.setProperty("user", "postgres");
